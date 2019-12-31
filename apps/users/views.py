@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from numpy import shape
 
-from apps.users.forms import UserCreationForm
+from apps.users.forms import UserCreationForm, ExtendedUserForm
 from apps.rents.models import Station, Bike, Hire_Transaction
 import json
 
@@ -29,14 +29,14 @@ def homepage(request):
 
 def register_request(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = ExtendedUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, "Registered username: {}".format(username))
             login(request, user)
             messages.info(request, "You have been successfully logged into an account")
-            return redirect("users:homepage")
+            return render(request, 'main/homepage.html')
 
         else:
             for msg in form.error_messages:
@@ -55,15 +55,15 @@ def login_request(request):
 
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
-
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                messages.info(request, f'You are now logged in as {username}')
 
+                return redirect('/')
             else:
                 messages.error(request, "Invalid username or password.")
         else:

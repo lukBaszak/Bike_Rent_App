@@ -14,25 +14,17 @@
 
 </head>
 
-<style>
-    .container {
-        width: 80%;
-        margin: 0 auto;
-        padding: 20px;
-        background: white;
-    }
-</style>
+
 
 <body>
 
 {% include 'main/include/navigation_bar.html' %}
 {% include 'main/include/messages.html' %}
 
-<div class="container">
-    <br>
+
     {% block content %}
     {% endblock %}
-</div>
+
 </body>
 
 <script src="{% static 'tinymce/js/prism.js' %}"></script>

@@ -1,11 +1,23 @@
 {% extends 'main/header.html' %}
 
 {%  block content %}
- <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-     <button class="btn waves-effect waves-light" type="submit" name="action">Submit<i class="material-icons right"></i></button>
 
- </form>
+    <style>
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+    }
+    </style>
+    <div class="container">
+     <br>
+     <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+         <button class="btn waves-effect waves-light" type="submit" name="action">Submit<i class="material-icons right"></i></button>
+
+     </form>
+    </div>
 
 {% endblock %}

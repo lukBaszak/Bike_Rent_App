@@ -2,20 +2,25 @@
 
 {% block content %}
 
-    <div class="container">
+    <style>
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+    }
+    </style>
+    <div>
         <br>
-        <form metho="post">
+        <form method="post">
 
             {% csrf_token %}
-            {{ form }}
+            {{ form.as_p }}
 
-        <button type="submit">Log in</button>
+                   <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Login</button>
         </form>
 
         If you still don't have an account <a href="/register" target="blank"><strong>reigster</strong> </a> instead.
-
-
-
     </div>
 
 {% endblock %}

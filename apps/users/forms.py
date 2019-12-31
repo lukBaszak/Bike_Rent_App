@@ -7,10 +7,19 @@ from phonenumber_field.formfields import PhoneNumberField
 from apps.users.models import Profile
 
 
-class UserForm(forms.ModelForm):
+class ExtendedUserForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
     class Meta:
         model = User
-        fields = ('email', 'password')
+        fields = ("username", "email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(ExtendedUserForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
 
 class ProfileForm(forms.ModelForm):
     class Meta:
