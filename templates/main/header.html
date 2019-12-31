@@ -1,9 +1,17 @@
 <head>
     {%  load static %}
+
+	<link rel="shortcut icon" href="https://image.flaticon.com/icons/png/512/130/130066.png">
+
     <link href="{% static 'tinymce/css/prism.css' %}" rel="stylesheet">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
 </head>
 
 <body>
@@ -11,7 +19,10 @@
 {% include 'main/include/navigation_bar.html' %}
 {% include 'main/include/messages.html' %}
 
-<div class="container">
+<div style="position": fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     <br>
     {% block content %}
     {% endblock %}

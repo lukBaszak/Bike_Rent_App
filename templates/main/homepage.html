@@ -1,1 +1,64 @@
 {% extends 'main/header.html' %}
+
+{% block content %}
+<head>
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Google Maps Multiple Markers</title>
+  <script src="http://maps.google.com/maps/api/js?sensor=false"
+          type="text/javascript"></script>
+</head>
+
+   <div id="map" style="width: 100%; height: 400px; margin: 0 auto"></div>
+
+  <script type="text/javascript">
+
+
+    var locations = {{stations|safe}};
+    var bikes = {{ bikes|safe}};
+    console.log(locations)
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: new google.maps.LatLng(52.401038, 16.911255),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+    var counter;
+
+    for (i = 0; i < locations.length; i++) {
+      counter = 0;
+      var j;
+
+      for(j=0; j<bikes.length; j++) {
+
+          if (bikes[j][1] === locations[i][1] && bikes[j][2] === locations[i][2]) {
+              counter++;
+              console.log('counter')
+          }
+      }
+
+
+
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map,
+
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i, counter) {
+        return function() {
+          infowindow.setContent(locations[i][0] + " " + counter + "/" + locations[i][3]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i, counter));
+    }
+  </script>
+
+
+
+
+{% endblock %}
