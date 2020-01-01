@@ -48,7 +48,7 @@ class Bike(models.Model):
 
 class Hire_Transaction(models.Model):
 
-    user = models.ManyToManyField(User)
+    user = models.ForeignKey(User, on_delete= models.CASCADE, blank=True, null=True)
     bike = models.ManyToManyField(Bike)
     start = models.DateTimeField()
     end = models.DateTimeField(blank=True, null=True)

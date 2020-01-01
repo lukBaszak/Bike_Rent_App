@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from numpy import shape
 
-from apps.users.forms import UserCreationForm, ExtendedUserForm
+from apps.users.forms import UserCreationForm, ExtendedUserForm, ProfileForm
 from apps.rents.models import Station, Bike, Hire_Transaction
 import json
 
@@ -22,7 +22,7 @@ def homepage(request):
 
     print(stations_json)
     print(bikes_json)
-    return render(request, 'main/homepage.html', context={'stations': stations_json,
+    return render(request, 'main/users/homepage.html', context={'stations': stations_json,
                                                           'bikes': bikes_json})
 
 
@@ -36,18 +36,18 @@ def register_request(request):
             messages.success(request, "Registered username: {}".format(username))
             login(request, user)
             messages.info(request, "You have been successfully logged into an account")
-            return render(request, 'main/homepage.html')
+            return render(request, 'main/users/homepage.html')
 
         else:
             for msg in form.error_messages:
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
             return render(request=request,
-                          template_name="main/register.html",
+                          template_name="main/users/register.html",
                           context={"form": form})
 
     form = UserCreationForm
     return render(request=request,
-                  template_name="main/register.html",
+                  template_name="main/users/register.html",
                   context={"form": form})
 
 
@@ -70,7 +70,7 @@ def login_request(request):
             messages.error(request, "Invalid username or password.")
     form = AuthenticationForm()
     return render(request=request,
-                  template_name="main/login.html",
+                  template_name="main/users/login.html",
                   context={"form": form})
 
 
@@ -84,9 +84,10 @@ def logout_request(request):
 
 def my_account(request):
 
-    user = User.objects.get(username=request.user.username)
-    hire_transactions = Hire_Transaction.objects.get(user=user)
+    user_profile =  ProfileForm(instance=request.user.profile)
+    hire_transactions = Hire_Transaction.objects.get(user=request.user)
 
 
 
-    return render(request, 'main/my_account.html', {user})
+    return render(request, 'main/users/my_account.html', {"profile": user_profile,
+                                                          'transactions': hire_transactions})

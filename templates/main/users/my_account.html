@@ -1,0 +1,95 @@
+{% extends 'main/header.html' %}
+
+{%  block content %}
+
+    <style>
+        .column1 {
+
+            padding: 20px;
+            float: left;
+            width: 30%;
+        }
+
+        .column2 {
+            padding: 20px;
+            float: left;
+            width: 40%
+
+        }
+
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col l3 s12 m5">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <div style="text-align: right">
+                            <span style="font-size: 16px; color: white">
+                                <a href="profile_settings/">
+                                    <i class="fas fa-wrench"></i>
+                                </a>
+                            </span>
+                        </div>
+
+                        <span class="card-title">{{ user.username|title }}</span>
+
+                        <div>
+                            <div class="email">{{ user.profile.email }}</div>
+                            <div class="phone_number">{{ user.profile.phone_number }}</div>
+                            <br>
+                            <div class="clearfix links">
+                                <a href="contact_settings/">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">{{ user.username|title }}</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                            I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l5 s12 m7">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                            I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col l4 s12 m7">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                            I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+{% endblock %}
