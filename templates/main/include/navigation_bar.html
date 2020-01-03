@@ -1,9 +1,10 @@
 
-<div class="navbar-fixed">
+
     <nav>
         <div id='nav_components' class="nav-wrapper">
           <a href="/" class="brand-logo">Logo</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material_icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
             <li><a href="/">Home</a></li>
            {%  if user.is_authenticated %}
 
@@ -14,7 +15,6 @@
 
             <li><a href="/account">{{ user.username|title  }}</a></li>
 
-
            {% else %}
             <li><a href="/register">Register</a></li>
             <li><a href="/login">Login</a></li>
@@ -23,7 +23,24 @@
           </ul>
         </div>
     </nav>
-</div>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="/">Home</a></li>
+        <li><a href="/history">History</a> </li>
+        <li><a href="/wallet">Wallet</a></li>
+        <li><a href="/history">History</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/account">{{ user.username|title  }}</a></li>
+    </ul>
+
+<script>
+    $(document).ready(function () {
+        $('.sidenav').sidenav();
+    });
+</script>
+
+
+
 
 
 

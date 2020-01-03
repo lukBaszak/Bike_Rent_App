@@ -1,4 +1,5 @@
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     {%  load static %}
     <script src="https://kit.fontawesome.com/493b64102c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
@@ -6,15 +7,17 @@
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all">
 	<link rel="shortcut icon" href="https://image.flaticon.com/icons/png/512/130/130066.png">
 
-    <link href="{% static 'tinymce/css/prism.css' %}" rel="stylesheet">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-
+    <style>
+        body {
+            background-color: #79aec8;
+        }
+    </style>
 </head>
 
 
@@ -29,5 +32,3 @@
     {% endblock %}
 
 </body>
-
-<script src="{% static 'tinymce/js/prism.js' %}"></script>

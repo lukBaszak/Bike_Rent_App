@@ -1,5 +1,7 @@
  {% if messages %}
+        messa
         {% for message in messages %}
+
             {% if message.tags == 'success'%}
                 <script>M.toast({html: "{{message}}", classes: 'green rounded', displayLength:2000});</script>
             {% elif message.tags == 'info'%}
@@ -10,4 +12,4 @@
                 <script>M.toast({html: "{{message}}", classes: 'red rounded', displayLength:10000});</script>
             {% endif %}
         {% endfor %}
-    {% endif %}
+    {% endif %}\

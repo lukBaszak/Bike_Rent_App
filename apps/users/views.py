@@ -45,7 +45,7 @@ def register_request(request):
                           template_name="main/users/register.html",
                           context={"form": form})
 
-    form = UserCreationForm
+    form = ExtendedUserForm
     return render(request=request,
                   template_name="main/users/register.html",
                   context={"form": form})
@@ -85,9 +85,9 @@ def logout_request(request):
 def my_account(request):
 
     user_profile =  ProfileForm(instance=request.user.profile)
-    hire_transactions = Hire_Transaction.objects.get(user=request.user)
+    hire_transactions = request.user.hire_transaction_set.all().order_by('-id')[:5].values()
 
-
-
+    transactions_json = json.dumps(list(hire_transactions), cls=DjangoJSONEncoder)
+    print(transactions_json)
     return render(request, 'main/users/my_account.html', {"profile": user_profile,
-                                                          'transactions': hire_transactions})
+                                                          'transactions': transactions_json})

@@ -20,7 +20,7 @@
     </style>
     <div class="container">
         <div class="row">
-            <div class="col l3 s12 m5">
+            <div class="col l3 s12 m5 nopadding">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
                         <div style="text-align: right">
@@ -63,33 +63,109 @@
                     </div>
                 </div>
             </div>
-            <div class="col l5 s12 m7">
+            <div class="col l3 s12 m7 nopadding">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                            I am convenient because I require little markup to use effectively.</p>
+                        <span class="card-title" style="text-align: left; font-size: 20px">Cash balance</span>
+
+                        <table style="color: white">
+                            <tr>
+                                <td>Balance:</td>
+                                <td style="float: right">0$</td>
+                            </tr>
+                                <td>Bonus</td>
+                                <td style="float: right">0</td>
+
+                        </table>
                     </div>
                     <div class="card-action">
-                        <a href="#">This is a link</a>
+                        <a href="#">Fuel your account!</a> </br>
                         <a href="#">This is a link</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col l4 s12 m7">
+            <div class="col l6 s12 m8 nopadding">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                            I am convenient because I require little markup to use effectively.</p>
+                        <span class="card-title">5 last finished transactions</span>
+                        <table id="transactions_table" style="color: white">
+                            <colgroup>
+                                <col group="highlights"/>
+                                <col group="hire_date"/>
+                                <col group="back_date"/>
+                                <col group="duration" />
+                                <col group="price"/>
+                            </colgroup>
+                            <tr style="color: white">
+                                <th>Highlights</th>
+                                <th>Hire</th>
+                                <th>Return</th>
+                                <th>Duration</th>
+                                <th>Price</th>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="card-action">
-                        <a href="#">This is a link</a>
-                        <a href="#">This is a link</a>
-                    </div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", append_json_data, false);
+
+                        function append_json_data() {
+                            var transactions_json = JSON.parse(JSON.stringify({{transactions|safe}}));
+                            var table = document.getElementById('transactions_table');
+                            transactions_json.forEach(function(object) {
+                                var tr = document.createElement('tr');
+                                start_date = new Date(object.start);
+                                end_date = new Date(object.end);
+
+                                start_date_formatted = start_date.getDay() + "." + appendLeadingZeroes(start_date.getMonth()+1) + "." + start_date.getFullYear() + ' ' + start_date.getHours() + '.' + start_date.getMinutes() + '.' + start_date.getSeconds();
+                                end_date_formatted = end_date.getDay() + "." + appendLeadingZeroes(end_date.getMonth()+1) + "." + end_date.getFullYear() + ' ' + end_date.getHours() + '.' + end_date.getMinutes() + '.' + end_date.getSeconds();
+
+
+                                duration = end_date - start_date;
+                                duration_formatted = parseMillisecondsIntoTime(duration);
+
+
+                                tr.innerHTML = '<td>'  + '<a href="product_highlight">' + 'lul' + '</a>' +'</td>' +
+                                                '<td>' + start_date_formatted + '</td>' +
+                                                '<td>' + end_date_formatted + '</td>' +
+                                                '<td>' + duration_formatted + '</td>' +
+                                                '<td>' + object.price + "zl" + '</td>';
+
+                                table.appendChild(tr);
+                            });
+                        }
+
+                        function appendLeadingZeroes(n){
+                              if(n <= 9){
+                                return "0" + n;
+                              }
+                              return n
+                                }
+
+                        function parseMillisecondsIntoTime(milliseconds){
+                          //Get hours from milliseconds
+                          var hours = milliseconds / (1000*60*60);
+                          var absoluteHours = Math.floor(hours);
+                          var h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+
+                          //Get remainder from hours and convert to minutes
+                          var minutes = (hours - absoluteHours) * 60;
+                          var absoluteMinutes = Math.floor(minutes);
+                          var m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
+
+                          //Get remainder from minutes and convert to seconds
+                          var seconds = (minutes - absoluteMinutes) * 60;
+                          var absoluteSeconds = Math.floor(seconds);
+                          var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
+
+
+                          return h + ':' + m + ':' + s;
+                          }
+                    </script>
                 </div>
             </div>
+        </div>
     </div>
 
 {% endblock %}
