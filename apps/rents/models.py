@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
-
-
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 
 
 class Station(models.Model):
@@ -49,10 +51,19 @@ class Bike(models.Model):
 class Hire_Transaction(models.Model):
 
     user = models.ForeignKey(User, on_delete= models.CASCADE, blank=True, null=True)
-    bike = models.ManyToManyField(Bike)
-    start = models.DateTimeField()
+    bike = models.ForeignKey(Bike, on_delete=models.CASCADE, blank=False, null=True)
+    start = models.DateTimeField(blank=False, null=False, default=datetime.now())
     end = models.DateTimeField(blank=True, null=True)
     price = models.FloatField(blank=True, null=True)
+    starting_station = models.ForeignKey(Station, on_delete= models.CASCADE, blank=True, null=True, editable=False)
+
+
+@receiver(pre_save, sender=Hire_Transaction)
+def update_hire_transaction(sender, instance, *args, **kwargs):
+        instance.starting_station = instance.bike.actual_station
+        bike = Bike.objects.get(id=instance.bike.id)
+        bike.actual_station = None
+        bike.save()
 
 
 

@@ -115,6 +115,7 @@
                             var table = document.getElementById('transactions_table');
                             transactions_json.forEach(function(object) {
                                 var tr = document.createElement('tr');
+
                                 start_date = new Date(object.start);
                                 end_date = new Date(object.end);
 
@@ -125,15 +126,34 @@
                                 duration = end_date - start_date;
                                 duration_formatted = parseMillisecondsIntoTime(duration);
 
-
-                                tr.innerHTML = '<td>'  + '<a href="product_highlight">' + 'lul' + '</a>' +'</td>' +
+                                tr.innerHTML = '<td>' + 'lol' +  '</td>' +
                                                 '<td>' + start_date_formatted + '</td>' +
                                                 '<td>' + end_date_formatted + '</td>' +
                                                 '<td>' + duration_formatted + '</td>' +
                                                 '<td>' + object.price + "zl" + '</td>';
 
+
+                                tr.onclick = function(evt) {
+
+                                    console.log(object.id);
+                                };
+                                tr.onfocus = function(evt) {
+                                   console.log('focused')
+                                   tr.style.background = 'yellow';
+                                };
+
                                 table.appendChild(tr);
+
                             });
+
+
+                        }
+
+                        function tdclick() {
+                            if (!e) var e = window.event;                // Get the window event
+                            e.cancelBubble = true;                       // IE Stop propagation
+                            if (e.stopPropagation) e.stopPropagation();  // Other Broswers
+                            console.log('td clicked');
                         }
 
                         function appendLeadingZeroes(n){
