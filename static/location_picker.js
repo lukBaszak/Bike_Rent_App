@@ -4,7 +4,6 @@
  * in the input fields.
  */
 
-
 ;(function($) {
 
   // We'll insert the map after this element:
@@ -17,12 +16,11 @@
 
   // If we don't have a lat/lon in the input fields,
   // this is where the map will be centered initially.
-  var initial_lat = 51.516448,
-      initial_lon = -0.130463;
+  var initial_lat =52.406374 ;
+      initial_lon = 16.925168;
 
   // Initial zoom level for the map.
-  var initial_zoom = 6;
-  console.log('hello guys')
+  var initial_zoom = 13;
 
   // Initial zoom level if input fields have a location.
   var initial_with_loc_zoom = 12;
@@ -34,7 +32,6 @@
    * Create HTML elements, display map, set up event listeners.
    */
   function initMap() {
-    console.log('hello')
     var $prevEl = $(prev_el_selector);
 
     if ($prevEl.length === 0) {
@@ -57,7 +54,6 @@
     $prevEl.after( $('<div class="js-setloc-map setloc-map"></div>') );
 
     var mapEl = document.getElementsByClassName('js-setloc-map')[0];
-    console.log('hello there')
     map = new google.maps.Map(mapEl, {
       zoom: initial_zoom,
       center: {lat: initial_lat, lng: initial_lon}
@@ -120,7 +116,6 @@
   };
 
   $(document).ready(function(){
-    console.log('hello')
     initMap();
   });
 

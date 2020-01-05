@@ -2,22 +2,7 @@
 
 {%  block content %}
 
-    <style>
-        .column1 {
 
-            padding: 20px;
-            float: left;
-            width: 30%;
-        }
-
-        .column2 {
-            padding: 20px;
-            float: left;
-            width: 40%
-
-        }
-
-    </style>
     <div class="container">
         <div class="row">
             <div class="col l3 s12 m5 nopadding">
@@ -122,24 +107,32 @@
                                 start_date_formatted = start_date.getDay() + "." + appendLeadingZeroes(start_date.getMonth()+1) + "." + start_date.getFullYear() + ' ' + start_date.getHours() + '.' + start_date.getMinutes() + '.' + start_date.getSeconds();
                                 end_date_formatted = end_date.getDay() + "." + appendLeadingZeroes(end_date.getMonth()+1) + "." + end_date.getFullYear() + ' ' + end_date.getHours() + '.' + end_date.getMinutes() + '.' + end_date.getSeconds();
 
-
                                 duration = end_date - start_date;
                                 duration_formatted = parseMillisecondsIntoTime(duration);
 
-                                tr.innerHTML = '<td>' + 'lol' +  '</td>' +
+                                if(object.price != null) {
+                                    tr.innerHTML = '<td>' + 'lol' +  '</td>' +
                                                 '<td>' + start_date_formatted + '</td>' +
+
                                                 '<td>' + end_date_formatted + '</td>' +
                                                 '<td>' + duration_formatted + '</td>' +
                                                 '<td>' + object.price + "zl" + '</td>';
+                                }
 
+                                else {
+                                    tr.innerHTML = '<td>' + 'lol' +  '</td>' +
+                                     '<td>' + start_date_formatted + '</td>' +
+                                      '<td>' + " - " + '</td>' +
+                                      '<td>' + " - " + '</td>' +
+                                      '<td>' + " - " + '</td>';
+                                }
 
                                 tr.onclick = function(evt) {
-
-                                    console.log(object.id);
-                                };
-                                tr.onfocus = function(evt) {
-                                   console.log('focused')
-                                   tr.style.background = 'yellow';
+                                    popupWindow = window.open(
+		                                'details/'+object.id,'popUpWindow','height=500 ,width=500,left=10,top=10,' +
+                                        'scrollbars=no,toolbar=no,menubar=no,location=no,' +
+                                        'directories=no,status=yes' +
+                                        'details={{object}}')
                                 };
 
                                 table.appendChild(tr);

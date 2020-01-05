@@ -20,8 +20,6 @@ def homepage(request):
     bikes = Bike.objects.values_list('bike_model','longitude', 'latitude')
     bikes_json = json.dumps(list(bikes), cls=DjangoJSONEncoder)
 
-    print(stations_json)
-    print(bikes_json)
     return render(request, 'main/users/homepage.html', context={'stations': stations_json,
                                                           'bikes': bikes_json})
 
@@ -91,3 +89,5 @@ def my_account(request):
     print(transactions_json)
     return render(request, 'main/users/my_account.html', {"profile": user_profile,
                                                           'transactions': transactions_json})
+
+

@@ -1,0 +1,147 @@
+ <div id="map" style="width: 100%; height: 400px; margin: 0 auto"></div>
+
+<head>
+  <script src="https://kit.fontawesome.com/493b64102c.js" crossorigin="anonymous"></script>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Google Maps Multiple Markers</title>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyCxn0UQot5aqIKu3TEoYfObTWNTlyemRwE&sensor=false&libraries=geometry&v=3"
+          type="text/javascript"></script>
+</head>
+
+ <style>
+.column {
+  float: left;
+  width: 33.33%;
+  text-align: center;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+ i{
+    font-size: 30px;
+     color: grey;
+     padding-bottom: 10px
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
+
+
+
+ </style>
+ <body>
+     <script type="text/javascript">
+
+         var transaction = {{ transaction|safe}};
+         transaction = transaction[0].fields
+         starting_station = transaction.starting_station;
+         ending_station = transaction.ending_station;
+
+         console.log(typeof (transaction[0]));
+
+          start_date = new Date(transaction.start);
+          end_date = new Date(transaction.end);
+
+           duration = end_date - start_date;
+           duration_formatted = parseMillisecondsIntoTime(duration);
+
+         starting_latitude = parseFloat(starting_station[0]);
+         starting_longitude = parseFloat(starting_station[1]);
+
+         ending_latitude = parseFloat(ending_station[0]);
+         ending_longitude = parseFloat(ending_station[1]);
+
+         avarage_latitude = (starting_latitude + ending_latitude) / 2;
+         average_longitude = (starting_longitude + ending_longitude) / 2;
+
+         var rideCoordinates = [
+             {lat: starting_latitude, lng: starting_longitude},
+             {lat: ending_latitude, lng: ending_longitude}
+         ];
+
+         var map = new google.maps.Map(document.getElementById('map'), {
+             zoom: 12,
+             center: new google.maps.LatLng(avarage_latitude, average_longitude),
+             mapTypeId: google.maps.MapTypeId.ROADMAP
+         });
+
+         distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(starting_latitude, starting_longitude), new google.maps.LatLng(ending_latitude, ending_longitude));
+         distance = parseInt(distance) / 1000;
+
+         var line = new google.maps.Polyline({
+             map: map,
+             path: rideCoordinates,
+             strokeColor: '#FF0000',
+             strokeOpacity: 1.0,
+             strokeWeight: 1
+         });
+
+         document.addEventListener("DOMContentLoaded", function(){
+
+             distance_tag = document.getElementById('distance_text');
+             distance_tag.innerText = distance + 'km';
+
+             time_tag = document.getElementById('time_text');
+             time_tag.innerText = duration_formatted;
+
+
+         });
+
+
+         function parseMillisecondsIntoTime(milliseconds){
+                          //Get hours from milliseconds
+                          var hours = milliseconds / (1000*60*60);
+                          var absoluteHours = Math.floor(hours);
+                          var h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+
+                          //Get remainder from hours and convert to minutes
+                          var minutes = (hours - absoluteHours) * 60;
+                          var absoluteMinutes = Math.floor(minutes);
+                          var m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
+
+                          //Get remainder from minutes and convert to seconds
+                          var seconds = (minutes - absoluteMinutes) * 60;
+                          var absoluteSeconds = Math.floor(seconds);
+                          var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
+
+
+                          return h + ':' + m + ':' + s;
+                          }
+     </script>
+
+     <br>
+    <div class="container">
+        <div class="row" >
+            <div class="column">
+                <span >
+                     <i class="fas fa-map-marker-alt" style=""></i><br>
+                </span>
+                <span id="distance_text">-</span>
+
+
+
+            </div>
+
+            <div class="column">
+                <span style="font-size: 30px; color:grey">
+                    <i class="fas fa-hourglass-end"></i><br>
+                </span>
+                <span id="time_text">-</span>
+            </div>
+
+            <div class="column">
+                <span style="font-size: 30px; color:grey">
+                    <i class="fas fa-money-bill-wave"></i><br>
+                </span>
+                <span id="price_text">-</span>
+            </div>
+        </div>
+    </div>
+ </body>
+
+
+
