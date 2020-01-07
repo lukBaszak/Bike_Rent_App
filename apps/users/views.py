@@ -23,6 +23,12 @@ def homepage(request):
     return render(request, 'main/users/homepage.html', context={'stations': stations_json,
                                                           'bikes': bikes_json})
 
+def history(request):
+    if request.user.is_authenticated:
+        hire_transactions = request.user.hire_transaction_set.all()
+        transactions_dict = [transaction.as_dict() for transaction in hire_transactions]
+        transactions_json = json.dumps(list(transactions_dict), cls=DjangoJSONEncoder)
+        return render(request, 'main/users/history.html', {"transactions": transactions_json})
 
 
 def register_request(request):
