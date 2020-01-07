@@ -1,0 +1,16 @@
+nav {
+    height: 6.5%;
+    background-color: #66ff66;
+    border-bottom: 1px solid black;
+
+}
+
+nav li a {
+    font-size: 20px;
+    color: black;
+    text-align: center;
+}
+.wallet {
+    font-size: 30px;
+}
+

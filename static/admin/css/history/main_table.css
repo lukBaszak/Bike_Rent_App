@@ -1,0 +1,48 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid grey;
+    border-top: none
+}
+
+thead th:nth-child(1) {
+  width: 20%;
+}
+
+thead th:nth-child(2) {
+  width: 20%;
+}
+
+thead th:nth-child(3) {
+  width: 20%;
+}
+
+thead th:nth-child(4) {
+  width: 20%;
+}
+
+thead th:nth-child(4) {
+  width: 20%;
+}
+
+thead {
+
+}
+
+
+
+th, td {
+    padding: 20px 10%;
+
+
+}
+
+tr {
+}
+
+tbody tr:nth-child(even) {
+    background-color: darkgray;
+}
+
+
