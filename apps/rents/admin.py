@@ -14,12 +14,12 @@ class BikeAdmin(admin.ModelAdmin):
 
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'latitude', 'longitude',)
+    list_display = ('name', 'max_bikes_quantity','latitude', 'longitude', )
     search_fields = ('name',)
 
     fieldsets = (
         (None, {
-            'fields': ('name', 'latitude', 'longitude',)
+            'fields': ('name','max_bikes_quantity', 'latitude', 'longitude', )
         }),
     )
 

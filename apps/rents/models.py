@@ -42,7 +42,7 @@ class Bike(models.Model):
     )
 
     bike_model = models.CharField(choices=MODEL, max_length=200)
-    actual_station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='bikes', null=True, blank=True)
+    actual_station = models.ForeignKey(Station, on_delete=models.SET_NULL, related_name='bikes', null=True, blank=True)
 
     latitude = models.DecimalField(
         max_digits=9, decimal_places=6, null=True, blank=True)
@@ -61,6 +61,8 @@ class Bike(models.Model):
 
 
 
+
+
 class Hire_Transaction(models.Model):
 
     user = models.ForeignKey(User, on_delete= models.CASCADE, blank=True, null=True)
@@ -70,6 +72,21 @@ class Hire_Transaction(models.Model):
     price = models.FloatField(blank=True, null=True)
     starting_station = models.ForeignKey(Station, related_name='starting_station',on_delete= models.CASCADE, blank=True, null=True, editable=True)
     ending_station = models.ForeignKey(Station, on_delete=models.CASCADE, blank=True, null=True)
+
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "bike": {"model": self.bike.bike_model},
+            "start": self.start,
+            "end": self.end,
+            "price": self.price,
+            "starting_station": {"name": self.starting_station.name,
+                                 "longitude": self.starting_station.longitude,
+                                 "latitude": self.starting_station.latitude},
+            "ending_station": {"name": self.starting_station.name,
+                                 "longitude": self.starting_station.longitude,
+                                 "latitude": self.starting_station.latitude},
+        }
 
 
 @receiver(pre_save, sender=Hire_Transaction)
