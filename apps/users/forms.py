@@ -2,12 +2,13 @@ from absl.flags import ValidationError
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from django.contrib.auth.models import User
+from django_registration.forms import RegistrationFormUniqueEmail
 from phonenumber_field.formfields import PhoneNumberField
 
 from apps.users.models import Profile
 
 
-class ExtendedUserForm(UserCreationForm):
+class ExtendedUserForm(RegistrationFormUniqueEmail):
     email = forms.EmailField(required=True)
 
     class Meta:
