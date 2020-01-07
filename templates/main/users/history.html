@@ -1,0 +1,83 @@
+{% extends 'main/header.html' %}
+
+
+{% block content %}
+{% load static %}
+
+    <head>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyCxn0UQot5aqIKu3TEoYfObTWNTlyemRwE&sensor=false&libraries=geometry&v=3"
+          type="text/javascript"></script>
+    </head>
+<link rel="stylesheet" href="{% static 'admin/css/history/main_table.css' %}">
+<link rel="stylesheet" href="{% static 'admin/css/modal_box.css' %}" >
+<style>
+    h1 {
+        text-align: center;
+    }
+</style>
+<div id="content">
+
+
+    <div class="wrapper">
+        <div class="wrapperInner">
+            <div class="text">
+                <h1>History</h1>
+                <div id="history">
+                    <div class="hpModule">
+                      <div class="hpTableWrapper">
+                          <div class="hpFilter">
+
+                          </div>
+                          <script></script>
+                          <div class="hpTable rentals">
+                              <table id="main_table" class="full">
+                                  <thead>
+                                    <tr>
+                                        <td class="Details">Highlights</td>
+                                        <td class="Start"><a href="history/section=rentals&sort=start_time">Start</a></td>
+                                        <td class="End"><a href="history/section=rentals&sort=end_time">End</a></td>
+                                        <td class="Duration"><a href="history/section=rentals&sort=duration">Duration</a></td>
+                                        <td class="price"><a href="history/section=rentals&sort=price">Price</a> </td>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <script type="text/javascript">
+                                        var link = document.createElement('link');
+                                        link.setAttribute('rel', 'stylesheet');
+                                        link.setAttribute('type', 'text/css');
+                                        link.setAttribute('href', 'css/history/main_table.css');
+                                        document.getElementsByTagName('head')[0].appendChild(link);
+                                        var transactions ={{ transactions|safe}};
+                                        var table = document.getElementById('main_table');
+                                       transactions.forEach(function(object) {
+                                            jQuery.getScript('/static/utility_functions.js', function() {
+                                                var tr = getTrTag(object);
+                                                tr.onclick = function(evt){
+                                                    popupWindow = window.open(
+                                                        '/details/'+object.id,'popUpWindow','height=500 ,width=500,left=10,top=10,' +
+                                                        'scrollbars=no,toolbar=no,menubar=no,location=no,' +
+                                                        'directories=no,status=yes' +
+                                                        'details={{object}}')
+                                                };
+                                                table.appendChild(tr)
+                                            });
+                                        });
+
+
+
+                                    </script>
+
+
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

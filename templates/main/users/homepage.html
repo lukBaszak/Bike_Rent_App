@@ -1,62 +1,110 @@
 {% extends 'main/header.html' %}
 
 {% block content %}
-<head>
+{% load static %}
 
+<head>
+  {% load static %}
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>Google Maps Multiple Markers</title>
-  <script src="http://maps.google.com/maps/api/js?key=AIzaSyCxn0UQot5aqIKu3TEoYfObTWNTlyemRwE&sensor=false"
-          type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static '/admin/css/main/map.css' %}" />
+    <link rel="stylesheet" href="{% static '/admin/css/main/statistics.css' %}" />
+    <script type="text/javascript" src="{% static 'admin/js/main/jquery.countTo.js' %}"></script>
+
 </head>
 
-   <div id="map" style="width: 100%; height: 600px; margin: 0 auto"></div>
 
-  <script type="text/javascript">
+<body>
 
+<div class="content">
 
-    var locations = {{stations|safe}};
-    var bikes = {{ bikes|safe}};
-    console.log(locations)
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 12,
-      center: new google.maps.LatLng(52.401038, 16.911255),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    var infowindow = new google.maps.InfoWindow();
-
-    var marker, i;
-    var counter;
-
-    for (i = 0; i < locations.length; i++) {
-      counter = 0;
-      var j;
-
-      for(j=0; j<bikes.length; j++) {
-
-          if (bikes[j][1] === locations[i][1] && bikes[j][2] === locations[i][2]) {
-              counter++;
-              console.log('counter')
-          }
-      }
+            <div class="main-photo-wrapper">
+                <div itemprop="image" class="main-photo_image parallax"> </div>
+                <div class="container py-2">
+                    <h1 class="main-photo--title text-primary"><span>Rent a vehicle and make our future greener place!</span></h1>
+                    <div class="main-photo--info">
+                        Join, Stay, Meet, Ride!
+                    </div>
+                </div>
+            </div>
 
 
+    <div class="container main">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="center promo">
+                        <i class="fas fa-bicycle"></i><br>
+                        <span class="timer promo-caption" data-from="0" data-to="500" data-speed='4000'  ></span>
+                        <span class="promo-caption icons">+</span>
+                        <p class="promo-caption">Bikes</p>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="center promo">
+                        <i class="fas fa-globe-europe"></i><br>
+                        <span class="timer promo-caption icons" data-from="0" data-to="36" data-speed='4000' ></span>
 
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-        map: map,
+                        <p class="promo-caption">Stations</p>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="center promo">
+                       <i class="fab fa-pagelines"></i><br>
+                        <span class="timer promo-caption icons" data-from="0" data-to="45000" data-speed='6000' ></span>
+                        <span class="promo-caption icons">kg +</span>
+                        <p class="promo-caption">CO2 saved</p>
+                        <script type="text/javascript">
+                             $(document).ready(function(){
+                                 $('.timer').countTo();
+                                $('.parallax').parallax();
+                              });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-      });
+    <div class="map-wrapper">
+        <div id="map"></div>
+        <script defer src="{% static 'admin/js/main/maps_utilities.js' %}"></script>
+    </div>
 
-      google.maps.event.addListener(marker, 'click', (function(marker, i, counter) {
-        return function() {
-          infowindow.setContent(locations[i][0] + " " + counter + "/" + locations[i][3]);
-          infowindow.open(map, marker);
-        }
-      })(marker, i, counter));
-    }
-  </script>
+    <p> ewefwefwefwef</p>
+        <p> ewefwefwefwef</p>
+
+        <p> ewefwefwefwef</p>
+
+        <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+    <p> ewefwefwefwef</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</body>
+
+
+
 
 
 

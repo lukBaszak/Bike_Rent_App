@@ -40,8 +40,8 @@
          transaction = transaction[0].fields
          starting_station = transaction.starting_station;
          ending_station = transaction.ending_station;
-
-         console.log(typeof (transaction[0]));
+         console.log(starting_station)
+         console.log(ending_station)
 
           start_date = new Date(transaction.start);
           end_date = new Date(transaction.end);
@@ -49,11 +49,11 @@
            duration = end_date - start_date;
            duration_formatted = parseMillisecondsIntoTime(duration);
 
-         starting_latitude = parseFloat(starting_station[0]);
-         starting_longitude = parseFloat(starting_station[1]);
+         starting_latitude = parseFloat(starting_station[1]);
+         starting_longitude = parseFloat(starting_station[0]);
 
-         ending_latitude = parseFloat(ending_station[0]);
-         ending_longitude = parseFloat(ending_station[1]);
+         ending_latitude = parseFloat(ending_station[1]);
+         ending_longitude = parseFloat(ending_station[0]);
 
          avarage_latitude = (starting_latitude + ending_latitude) / 2;
          average_longitude = (starting_longitude + ending_longitude) / 2;
