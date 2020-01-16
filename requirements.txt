@@ -1,0 +1,7 @@
+Django
+numpy
+pyqrcode
+django-phonenumber-field
+djangorestframework
+django-registration
+requests
