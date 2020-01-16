@@ -1,7 +1,7 @@
 
 from django import forms
 
-from apps.rents.models import Hire_Transaction, Bike
+from apps.rents.models import HireTransaction, Bike
 
 
 

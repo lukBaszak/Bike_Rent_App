@@ -5,12 +5,12 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from apps.rents.models import Hire_Transaction, Station
+from apps.rents.models import HireTransaction, Station
 
 
 def transaction_details_request(request, transaction_id):
 
-    transaction = Hire_Transaction.objects.get(id=transaction_id)
+    transaction = HireTransaction.objects.get(id=transaction_id)
 
     transaction_json_good = serializers.serialize('json', [transaction,], indent=2, use_natural_foreign_keys=True)
 

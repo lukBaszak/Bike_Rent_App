@@ -63,7 +63,7 @@ class Bike(models.Model):
 
 
 
-class Hire_Transaction(models.Model):
+class HireTransaction(models.Model):
 
     user = models.ForeignKey(User, on_delete= models.CASCADE, blank=True, null=True)
     bike = models.ForeignKey(Bike, on_delete=models.CASCADE, blank=False, null=True)
@@ -89,7 +89,7 @@ class Hire_Transaction(models.Model):
         }
 
 
-@receiver(pre_save, sender=Hire_Transaction)
+@receiver(pre_save, sender=HireTransaction)
 def update_hire_transaction(sender, instance, *args, **kwargs):
         instance.starting_station = instance.bike.actual_station
         bike = Bike.objects.get(id=instance.bike.id)
