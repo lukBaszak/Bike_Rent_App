@@ -34,41 +34,76 @@
                                   <thead>
                                     <tr>
                                         <td class="Details">Highlights</td>
-                                        <td class="Start"><a href="history/section=rentals&sort=start_time">Start</a></td>
-                                        <td class="End"><a href="history/section=rentals&sort=end_time">End</a></td>
-                                        <td class="Duration"><a href="history/section=rentals&sort=duration">Duration</a></td>
-                                        <td class="price"><a href="history/section=rentals&sort=price">Price</a> </td>
+                                        <td onclick="sort_by('start')" class="Start">Start</td>
+                                        <td onclick="sort_by('end')" class="End">End</td>
+                                        <td onclick="sort_by('duration')" class="Duration">Duration</td>
+                                        <td onclick="sort_by('price')" class="price">Price</td>
                                     </tr>
                                   </thead>
-                                  <tbody>
-                                    <script type="text/javascript">
+                                  <tbody id="table_body">
+
+
+                                  </tbody>
+
+                                   <script type="text/javascript">
+
+                                        var dict_orders = {"start":-1,
+                                                            "end":-1,
+                                                            "duration":-1,
+                                                            "price":-1};
+
                                         var link = document.createElement('link');
                                         link.setAttribute('rel', 'stylesheet');
                                         link.setAttribute('type', 'text/css');
                                         link.setAttribute('href', 'css/history/main_table.css');
                                         document.getElementsByTagName('head')[0].appendChild(link);
+
                                         var transactions ={{ transactions|safe}};
-                                        var table = document.getElementById('main_table');
-                                       transactions.forEach(function(object) {
-                                            jQuery.getScript('/static/utility_functions.js', function() {
-                                                var tr = getTrTag(object);
-                                                tr.onclick = function(evt){
-                                                    popupWindow = window.open(
-                                                        '/details/'+object.id,'popUpWindow','height=500 ,width=500,left=10,top=10,' +
-                                                        'scrollbars=no,toolbar=no,menubar=no,location=no,' +
-                                                        'directories=no,status=yes' +
-                                                        'details={{object}}')
-                                                };
-                                                table.appendChild(tr)
-                                            });
-                                        });
+                                        initialize_table(transactions);
+
+                                        function sort_by(order_by) {
+                                            console.log('http://127.0.0.1:8080/api/v1/transactions/?sort_by=' + order_by + '&reversed='+ dict_orders[order_by])
+                                           fetch('http://127.0.0.1:8080/api/v1/transactions/?sort_by=' + order_by + '&reversed='+ dict_orders[order_by])
+                                              .then((response) => {
+                                                return response.json();
+                                              })
+                                            .then((result) => {
+                                              transactions = result
+                                            })
+                                            .catch((error) => {
+                                              console.error('Error:', error);
+                                            })
+                                            console.log(transactions)
+                                           dict_orders[order_by] = -dict_orders[order_by];
+                                           initialize_table(transactions)
+                                        }
+
+                                        function initialize_table(transactions) {
+                                            var table = document.getElementById('table_body');
+                                            $("tbody").children().remove()
 
 
+                                                jQuery.getScript('/static/utility_functions.js', function() {
+                                                    transactions.forEach(function(object) {
+                                                        tr = getTrTag(object);
+                                                        tr.onclick = function(evt){
+                                                            console.log(object)
+                                                            popupWindow = window.open(
+                                                                '/details/'+object.id,'popUpWindow','height=500 ,width=500,left=10,top=10,' +
+                                                                'scrollbars=no,toolbar=no,menubar=no,location=no,' +
+                                                                'directories=no,status=yes' +
+                                                                'details={{object}}')
+                                                        };
+
+                                                        table.appendChild(tr)
+                                                    });
+
+                                                });
+
+                                        }
 
                                     </script>
 
-
-                                  </tbody>
                               </table>
                           </div>
                       </div>
