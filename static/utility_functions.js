@@ -13,7 +13,6 @@
                           var seconds = (minutes - absoluteMinutes) * 60;
                           var absoluteSeconds = Math.floor(seconds);
                           var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
-                          console.log(hours)
 
                           return h + ':' + m + ':' + s;
                           }
@@ -22,14 +21,22 @@ function getTrTag(object) {
 
     var tr = document.createElement('tr');
 
-    start_date = new Date(object.start);
-    end_date = new Date(object.end);
+
+
+
+    var start_date = new Date(object.start);
+    var end_date = new Date(object.end)
+
+
 
     start_date_formatted = start_date.getDay() + "." + appendLeadingZeroes(start_date.getMonth()+1) + "." + start_date.getFullYear() + ' ' + start_date.getHours() + '.' + start_date.getMinutes() + '.' + start_date.getSeconds();
     end_date_formatted = end_date.getDay() + "." + appendLeadingZeroes(end_date.getMonth()+1) + "." + end_date.getFullYear() + ' ' + end_date.getHours() + '.' + end_date.getMinutes() + '.' + end_date.getSeconds();
 
+
+
     duration = end_date - start_date;
     duration_formatted = parseMillisecondsIntoTime(duration);
+
 
 
     if(object.price != null) {
@@ -59,12 +66,7 @@ function getTrTag(object) {
     };
 
 
-    tr.onmouseover = function(evt) {
-        tr.style.backgroundColor = '#78909c'
-    };
-    tr.onmouseleave = function(evt) {
-        tr.style.backgroundColor = '#546e7a'
-    };
+
 
 
 

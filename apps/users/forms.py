@@ -25,7 +25,7 @@ class ExtendedUserForm(RegistrationFormUniqueEmail):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('bio', 'birth_date', 'phone_number')
+        fields = ('bio', 'birth_date', 'phone_number', 'qr_identifier')
 
 
 

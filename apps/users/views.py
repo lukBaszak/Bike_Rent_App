@@ -7,10 +7,14 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from numpy import shape
+import pyqrcode
 
 from apps.users.forms import UserCreationForm, ExtendedUserForm, ProfileForm
-from apps.rents.models import Station, Bike, Hire_Transaction
+from apps.rents.models import Station, Bike, HireTransaction
 import json
+
+from apps.users.models import Profile
+
 
 def homepage(request):
 
@@ -25,7 +29,7 @@ def homepage(request):
 
 def history(request):
     if request.user.is_authenticated:
-        hire_transactions = request.user.hire_transaction_set.all()
+        hire_transactions = request.user.hiretransaction_set.all()
         transactions_dict = [transaction.as_dict() for transaction in hire_transactions]
         transactions_json = json.dumps(list(transactions_dict), cls=DjangoJSONEncoder)
         return render(request, 'main/users/history.html', {"transactions": transactions_json})
@@ -86,14 +90,17 @@ def logout_request(request):
     return redirect('users:homepage')
 
 
+
 def my_account(request):
 
-    user_profile =  ProfileForm(instance=request.user.profile)
-    hire_transactions = request.user.hire_transaction_set.all().order_by('-id')[:5].values()
+    user_profile = ProfileForm(instance=request.user.profile)
 
-    transactions_json = json.dumps(list(hire_transactions), cls=DjangoJSONEncoder)
-    print(transactions_json)
-    return render(request, 'main/users/my_account.html', {"profile": user_profile,
-                                                          'transactions': transactions_json})
+    hire_transactions = request.user.hiretransaction_set.all().order_by('-id')[:5]
+    transactions_dict = [transaction.as_dict() for transaction in hire_transactions]
+    transactions_json = json.dumps(list(transactions_dict), cls=DjangoJSONEncoder)
+    return render(request, 'main/users/my_account.html', { "profile": user_profile,
+                                                        "transactions": transactions_json})
+
+
 
 
