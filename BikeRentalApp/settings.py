@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.users.apps.MainConfig',
     'apps.rents.apps.RentConfig',
+    'apps.payments',
     'phonenumber_field',
     'rest_framework'
 

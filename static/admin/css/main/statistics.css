@@ -130,7 +130,7 @@ html, body {
 
 .main-photo--title span {
     border-radius: 25px 25px 25px 25px ;
-    background-color: white;
-    color: #66ff66;
+    font-size: 70px;
+    color: #000000;
 }
 

@@ -36,7 +36,8 @@
                                         <td class="Details">Highlights</td>
                                         <td onclick="sort_by('start')" class="Start">Start</td>
                                         <td onclick="sort_by('end')" class="End">End</td>
-                                        <td onclick="sort_by('duration')" class="Duration">Duration</td>
+                                        <!-- TODO fix duration-->
+                                        <td class="Duration">Duration</td>
                                         <td onclick="sort_by('price')" class="price">Price</td>
                                     </tr>
                                   </thead>
@@ -46,38 +47,44 @@
                                   </tbody>
 
                                    <script type="text/javascript">
-                                            var last_column;
-
+                                            var ascending = -1;
+                                            var last_column = 'start'
                                             $(document).ready(function () {
-                                                sort_by();
+                                                sort_by('start');
                                             });
+
 
 
                                             function sort_by(column) {
 
-                                                var ascending = 1;
-                                                if(last_column === column) {
-                                                    ascending*=-1;
+                                                $('#main_table tbody').empty();
+                                                if(last_column !== column) {
+                                                    ascending = 1;
                                                 }
-                                                last_column = column;
+                                                else {
+                                                    ascending= -ascending;
+                                                }
 
-                                                fetch(`http://127.0.0.1:8080/api/v1/transactions/?order_by=${0}&reverser={1}`.format(column, ascending))
+
+
+                                                fetch(`http://127.0.0.1:8080/api/v1/transactions/?sort_by=${column}&reversed=${ascending}`)
                                                     .then((response) => {
                                                         return response.json()
                                                     })
                                                     .then((myJson) => {
                                                         var transaction_data = '';
                                                         $.each(myJson, function(key, value) {
-                                                            transaction_data += '<tr>';
+                                                            transaction_data += '<tr onclick=sort_by("start")>';
                                                             transaction_data += '<td>' + '<i class="fas fa-info-circle"></i>' +  '</td>';
                                                             transaction_data +='<td>'+ value.start +'</td>';
                                                             transaction_data +='<td>'+ value.end +'</td>';
                                                             transaction_data +='<td>'+ 9000 +'</td>';
-                                                            transaction_data +='<td>'+ 34 +'</td>';
+                                                            transaction_data +='<td>'+ value.price +'</td>';
                                                             transaction_data += '</tr>';
                                                         });
                                                         $('#main_table').append(transaction_data)
                                                     })
+                                                last_column = column;
                                             }
 
                                     </script>

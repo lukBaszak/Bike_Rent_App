@@ -14,6 +14,5 @@ urlpatterns = [
     path('history/', views.history, name='history'),
     path('details/<int:transaction_id>/', rents_views.transaction_details_request),
 
-    path('api/v1/transactions/', include('apps.rents.api.urls')),
-    path('api/v1/users/', include('apps.users.api.urls')),
+
 ]

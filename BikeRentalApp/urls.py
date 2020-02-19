@@ -17,14 +17,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
-from apps.api import views
-
+from apps.rents.api.views import StationViewSet
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('apps.rents.urls')),
     path('', include('apps.users.urls')),
-    url(r'^stations/$', views.StationView.as_view(), name='station-list'),
+    path('stations/', StationViewSet.as_view()),
 
-
+    path('api/v1/transactions/', include('apps.rents.api.urls')),
+    path('api/v1/users/', include('apps.users.api.urls')),
 
 ]

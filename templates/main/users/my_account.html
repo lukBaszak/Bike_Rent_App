@@ -3,23 +3,16 @@
 {%  block content %}
 {% load static %}
 
-    <head>
 
-        <link rel="stylesheet" href="{% static '/admin/css/main/account.css' %}" />
-
-    </head>
     <br>
     <div class="container">
         <div class="row">
             <div class="col l12">
-                <div class="qr_wrapper" style="text-align: center">
+                <div class="qr_wrapper">
                     <div class="qr_image_wrapper" >
-                        <img id="qr-image" class="materialboxed" style="height: 10%" src="http://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data={{ profile.qr_identifier  }}"/> <br>
+                        <img id="qr-image" src=""/> <br>
 
                     </div>
-
-                    Scan qr code and take ur bike!
-
                 </div>
             </div>
             <div class="col l3 s12 m5 nopadding">
@@ -32,12 +25,11 @@
                                 </a>
                             </span>
                         </div>
-
                         <span class="card-title">{{ user.username|title }}</span>
 
                         <div>
-                            <div class="email">{{ user.profile.email }}</div>
-                            <div class="phone_number">{{ user.profile.phone_number }}</div>
+                            <span class="contact_information" id="email">{{ user.profile.email }}</span>
+                            <span class="contact_information" id="phone_number">{{ user.profile.phone_number }}</span>
                             <br>
                             <div class="clearfix links">
                                 <a href="contact_settings/">
@@ -47,10 +39,7 @@
                         </div>
 
                     </div>
-                    <div class="card-action">
-                        <a href="#">This is a link</a>
-                        <a href="#">This is a link</a>
-                    </div>
+
                 </div>
 
                 <div class="card blue-grey darken-1">
@@ -59,10 +48,7 @@
                         <p>I am a very simple card. I am good at containing small bits of information.
                             I am convenient because I require little markup to use effectively.</p>
                     </div>
-                    <div class="card-action">
-                        <a href="#">This is a link</a>
-                        <a href="#">This is a link</a>
-                    </div>
+
                 </div>
             </div>
             <div class="col l3 s12 m7 nopadding">
@@ -73,7 +59,7 @@
                         <table style="color: white">
                             <tr>
                                 <td>Balance:</td>
-                                <td style="float: right">0$</td>
+                                <td id='balance' style="float: right">0$</td>
                             </tr>
                                 <td>Bonus</td>
                                 <td style="float: right">0</td>
@@ -82,7 +68,6 @@
                     </div>
                     <div class="card-action">
                         <a href="#">Fuel your account!</a> </br>
-                        <a href="#">This is a link</a>
                     </div>
                 </div>
             </div>
@@ -104,29 +89,29 @@
                         <a href="/history">
                             <i class="fas fa-align-justify" style="padding-right: 10px; font-size: 15px" ></i>
                             <span style="font-size: 15px"> check full history of rentals </span>
-
                         </a>
-
-
                     </div>
 
                     <script>
                         $(document).ready(function () {
+
                             fetch("http://127.0.0.1:8080/api/v1/transactions/")
                                 .then((response) => {
                                     return response.json()
                                 })
                                 .then((myJson) => {
                                     var transaction_data = '';
+                                    myJson = myJson.slice(0,5);
                                     $.each(myJson, function(key, value) {
-                                        transaction_data += '<tr>';
+                                        transaction_data += '<tr >';
                                         transaction_data += '<td>' + '<i class="fas fa-info-circle"></i>' +  '</td>';
                                         transaction_data +='<td>'+ value.start +'</td>';
                                         transaction_data +='<td>'+ value.end +'</td>';
                                         transaction_data +='<td>'+ 9000 +'</td>';
-                                        transaction_data +='<td>'+ 34 +'</td>';
+                                        transaction_data +='<td>'+ value.price +'</td>';
                                         transaction_data += '</tr>';
                                     });
+
                                     $('#transactions_table').append(transaction_data)
                                 })
                         });
@@ -135,6 +120,17 @@
                             $('.materialboxed').materialbox();
                           });
 
+                         $(document).ready(function() {
+                             fetch("http://127.0.0.1:8080/api/v1/users/profile_information/")
+                                 .then((response) => {
+                                     return response.json()
+                                 })
+                                 .then((myJson) => {
+                                     balance = myJson['balance'];
+                                    $("#balance").text(myJson['balance']+"zł");
+                                    $("#qr-image").attr("src", `http://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${myJson['qr_identifier']}`);
+                                 })
+                         })
                     </script>
                 </div>
             </div>

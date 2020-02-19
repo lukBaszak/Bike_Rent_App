@@ -12,10 +12,12 @@ class BikeAdmin(admin.ModelAdmin):
     form = BikeForm
 
 
+
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
     list_display = ('name', 'max_bikes_quantity','latitude', 'longitude', )
-    search_fields = ('name',)
+
+
 
     fieldsets = (
         (None, {
@@ -26,13 +28,12 @@ class StationAdmin(admin.ModelAdmin):
     class Media:
         if hasattr(settings, 'GOOGLE_MAPS_API_KEY') and settings.GOOGLE_MAPS_API_KEY:
             css = {
-                'all': ('location_picker.css',),
+                'all': ('admin/css/admin/location_picker.css',),
             }
             js = (
                 'https://maps.googleapis.com/maps/api/js?key={}'.format(settings.GOOGLE_MAPS_API_KEY),
-                'location_picker.js',
+                'admin/js/main/location_picker.js',
             )
-
 
 
 admin.site.register(Bike, BikeAdmin)
