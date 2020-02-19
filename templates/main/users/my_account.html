@@ -91,15 +91,8 @@
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
                         <span class="card-title">5 last finished transactions</span>
-                        <table id="transactions_table" style="color: white">
-                            <colgroup>
-                                <col group="highlights"/>
-                                <col group="hire_date"/>
-                                <col group="back_date"/>
-                                <col group="duration" />
-                                <col group="price"/>
-                            </colgroup>
-                            <tr style="color: white">
+                        <table class="table table-bordered table-striped" id="transactions_table">
+                            <tr>
                                 <th>Highlights</th>
                                 <th>Hire</th>
                                 <th>Return</th>
@@ -118,25 +111,29 @@
                     </div>
 
                     <script>
+                        $(document).ready(function () {
+                            fetch("http://127.0.0.1:8080/api/v1/transactions/")
+                                .then((response) => {
+                                    return response.json()
+                                })
+                                .then((myJson) => {
+                                    var transaction_data = '';
+                                    $.each(myJson, function(key, value) {
+                                        transaction_data += '<tr>';
+                                        transaction_data += '<td>' + '<i class="fas fa-info-circle"></i>' +  '</td>';
+                                        transaction_data +='<td>'+ value.start +'</td>';
+                                        transaction_data +='<td>'+ value.end +'</td>';
+                                        transaction_data +='<td>'+ 9000 +'</td>';
+                                        transaction_data +='<td>'+ 34 +'</td>';
+                                        transaction_data += '</tr>';
+                                    });
+                                    $('#transactions_table').append(transaction_data)
+                                })
+                        });
+
                          $(document).ready(function(){
                             $('.materialboxed').materialbox();
                           });
-
-                        var transactions ={{ transactions|safe}};
-                                        var table = document.getElementById('transactions_table');
-                                       transactions.forEach(function(object) {
-                                            jQuery.getScript('/static/utility_functions.js', function() {
-                                                var tr = getTrTag(object);
-                                                tr.onclick = function(evt){
-                                                    popupWindow = window.open(
-                                                        '/details/'+object.id,'popUpWindow','height=500 ,width=500,left=10,top=10,' +
-                                                        'scrollbars=no,toolbar=no,menubar=no,location=no,' +
-                                                        'directories=no,status=yes' +
-                                                        'details={{object}}')
-                                                };
-                                                table.appendChild(tr)
-                                            });
-                                        });
 
                     </script>
                 </div>

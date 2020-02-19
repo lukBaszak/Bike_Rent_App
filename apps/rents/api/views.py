@@ -20,13 +20,13 @@ class RentTransactionList(generics.ListAPIView):
     serializer_class = RentTransactionSerializer
 
     def get_queryset(self):
-        sort_by = self.request.query_params.get("sort_by", None)
-        reversed_sorting = self.request.query_params.get("reversed", None)
+        sort_by = self.request.query_params.get("sort_by", "start")
+        reversed_sorting = self.request.query_params.get("reversed", 1)
         user = self.request.user
 
-        if reversed_sorting == '1':
+        if reversed_sorting == 1:
             print('1')
-            return HireTransaction.objects.order_by().order_by(sort_by).filter(user=user)
+            return HireTransaction.objects.order_by().order_by("price").filter(user=user)
 
         elif reversed_sorting == '-1':
             print('-1')

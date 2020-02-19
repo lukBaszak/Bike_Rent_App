@@ -46,61 +46,39 @@
                                   </tbody>
 
                                    <script type="text/javascript">
+                                            var last_column;
 
-                                        var dict_orders = {"start":-1,
-                                                            "end":-1,
-                                                            "duration":-1,
-                                                            "price":-1};
-
-                                        var link = document.createElement('link');
-                                        link.setAttribute('rel', 'stylesheet');
-                                        link.setAttribute('type', 'text/css');
-                                        link.setAttribute('href', 'css/history/main_table.css');
-                                        document.getElementsByTagName('head')[0].appendChild(link);
-
-                                        var transactions ={{ transactions|safe}};
-                                        initialize_table(transactions);
-
-                                        function sort_by(order_by) {
-                                            console.log('http://127.0.0.1:8080/api/v1/transactions/?sort_by=' + order_by + '&reversed='+ dict_orders[order_by])
-                                           fetch('http://127.0.0.1:8080/api/v1/transactions/?sort_by=' + order_by + '&reversed='+ dict_orders[order_by])
-                                              .then((response) => {
-                                                return response.json();
-                                              })
-                                            .then((result) => {
-                                              transactions = result
-                                            })
-                                            .catch((error) => {
-                                              console.error('Error:', error);
-                                            })
-                                            console.log(transactions)
-                                           dict_orders[order_by] = -dict_orders[order_by];
-                                           initialize_table(transactions)
-                                        }
-
-                                        function initialize_table(transactions) {
-                                            var table = document.getElementById('table_body');
-                                            $("tbody").children().remove()
+                                            $(document).ready(function () {
+                                                sort_by();
+                                            });
 
 
-                                                jQuery.getScript('/static/utility_functions.js', function() {
-                                                    transactions.forEach(function(object) {
-                                                        tr = getTrTag(object);
-                                                        tr.onclick = function(evt){
-                                                            console.log(object)
-                                                            popupWindow = window.open(
-                                                                '/details/'+object.id,'popUpWindow','height=500 ,width=500,left=10,top=10,' +
-                                                                'scrollbars=no,toolbar=no,menubar=no,location=no,' +
-                                                                'directories=no,status=yes' +
-                                                                'details={{object}}')
-                                                        };
+                                            function sort_by(column) {
 
-                                                        table.appendChild(tr)
-                                                    });
+                                                var ascending = 1;
+                                                if(last_column === column) {
+                                                    ascending*=-1;
+                                                }
+                                                last_column = column;
 
-                                                });
-
-                                        }
+                                                fetch(`http://127.0.0.1:8080/api/v1/transactions/?order_by=${0}&reverser={1}`.format(column, ascending))
+                                                    .then((response) => {
+                                                        return response.json()
+                                                    })
+                                                    .then((myJson) => {
+                                                        var transaction_data = '';
+                                                        $.each(myJson, function(key, value) {
+                                                            transaction_data += '<tr>';
+                                                            transaction_data += '<td>' + '<i class="fas fa-info-circle"></i>' +  '</td>';
+                                                            transaction_data +='<td>'+ value.start +'</td>';
+                                                            transaction_data +='<td>'+ value.end +'</td>';
+                                                            transaction_data +='<td>'+ 9000 +'</td>';
+                                                            transaction_data +='<td>'+ 34 +'</td>';
+                                                            transaction_data += '</tr>';
+                                                        });
+                                                        $('#main_table').append(transaction_data)
+                                                    })
+                                            }
 
                                     </script>
 

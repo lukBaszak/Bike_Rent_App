@@ -72,6 +72,8 @@ class HireTransaction(models.Model):
     price = models.FloatField(blank=True, null=True)
     starting_station = models.ForeignKey(Station, related_name='starting_station',on_delete= models.CASCADE, blank=True, null=True, editable=True)
     ending_station = models.ForeignKey(Station, on_delete=models.CASCADE, blank=True, null=True)
+    # status
+
 
     def as_dict(self):
         return {
@@ -87,6 +89,8 @@ class HireTransaction(models.Model):
                                  "longitude": self.starting_station.longitude,
                                  "latitude": self.starting_station.latitude},
         }
+
+
 
 
 @receiver(pre_save, sender=HireTransaction)

@@ -19,11 +19,12 @@ class BikeSerializer(serializers.ModelSerializer):
 class RentTransactionSerializer(serializers.ModelSerializer):
 
     bike = BikeSerializer()
-    starting_station = StationSerializer()
-    ending_station = StationSerializer()
+
+    start = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    end = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     class Meta:
         model = HireTransaction
-        fields = ['id','bike', 'start', 'end', 'price', 'starting_station', 'ending_station']
+        fields = ['bike', 'start', 'end', 'price', 'starting_station', 'ending_station']
 
 
