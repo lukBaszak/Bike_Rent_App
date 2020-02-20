@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from numpy import shape
 import pyqrcode
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.views import APIView
 
 from apps.users.forms import UserCreationForm, ExtendedUserForm, ProfileForm
 from apps.rents.models import Station, Bike, HireTransaction
@@ -32,7 +34,7 @@ def history(request):
         hire_transactions = request.user.hiretransaction_set.all()
         transactions_dict = [transaction.as_dict() for transaction in hire_transactions]
         transactions_json = json.dumps(list(transactions_dict), cls=DjangoJSONEncoder)
-        return render(request, 'main/users/history.html', {"transactions": transactions_json})
+        return render(request, 'main/users/history.html')
 
 
 def register_request(request):

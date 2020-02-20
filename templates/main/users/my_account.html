@@ -6,95 +6,114 @@
 
     <br>
     <div class="container">
-        <div class="row">
-            <div class="col l12">
-                <div class="qr_wrapper">
-                    <div class="qr_image_wrapper" >
-                        <img id="qr-image" src=""/> <br>
-
+    <div class="row">
+        <div class="qr_info">
+                    <div class="qr_wrapper">
+                        <h2>Scan it and choose your vechicle!</h2>
+                        <div class="qr_image_wrapper" >
+                            <img id="qr-image" src=""/> <br>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col l3 s12 m5 nopadding">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <div style="text-align: right">
-                            <span style="font-size: 16px; color: white">
-                                <a href="profile_settings/">
-                                    <i class="fas fa-wrench"></i>
-                                </a>
-                            </span>
-                        </div>
-                        <span class="card-title">{{ user.username|title }}</span>
+        </div>
 
-                        <div>
-                            <span class="contact_information" id="email">{{ user.profile.email }}</span>
-                            <span class="contact_information" id="phone_number">{{ user.profile.phone_number }}</span>
-                            <br>
-                            <div class="clearfix links">
-                                <a href="contact_settings/">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
+        <div class="row">
+
+            <h1>My Account</h1>
+
+            <div class="column">
+                 <div class="col l12 s12 m12">
+                    <div class="card white darken-1">
+                        <div class="card-content highlight">
+                            <div >
+                                Everything is ok, check Your account balance
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <span class="card-title">{{ user.username|title }}</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                            I am convenient because I require little markup to use effectively.</p>
-                    </div>
+                <div class="col l6 s12 m12">
+                    <div class="card white darken-1">
+                        <div class="card-content">
+                            <div style="text-align: right">
+                                <span style="font-size: 16px; color: black">
+                                    <a href="profile_settings/">
+                                        <i class="icon fas fa-wrench"></i>
+                                    </a>
+                                </span>
+                            </div>
 
+                            <span class="card-title"
+                            >{{ user.first_name}} {{ user.last_name}}</span>
+
+                            <div>
+                                <span class="contact_information" id="email">{{ user.email }}</span> <br>
+                                <span class="contact_information" id="phone_number">{{ user.phone_number }}</span>
+                                <br>
+                                <div class="clearfix links">
+                                    <a href="contact_settings/" style="color: black; text-decoration: underline">
+                                        <i class="icon fas fa-envelope"></i> Notifications
+
+                                    </a>
+                                    <br>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col l6 s12 m12">
+                    <div class="card white darken-1">
+                        <div class="card-content">
+                            <span class="card-title" style="text-align: left; font-size: 20px">Cash balance</span>
+
+                            <table >
+                                <tr>
+                                    <td>Balance:</td>
+                                    <td id='balance'>0$</td>
+                                </tr>
+                                    <td>Bonus</td>
+                                    <td >0</td>
+
+                            </table>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">Fuel your account!</a> </br>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col l3 s12 m7 nopadding">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <span class="card-title" style="text-align: left; font-size: 20px">Cash balance</span>
 
-                        <table style="color: white">
-                            <tr>
-                                <td>Balance:</td>
-                                <td id='balance' style="float: right">0$</td>
-                            </tr>
-                                <td>Bonus</td>
-                                <td style="float: right">0</td>
-
-                        </table>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Fuel your account!</a> </br>
+            <div class="column">
+                <div class="col l13 s13 m13">
+                    <div class="card white darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">5 last finished transactions</span>
+                            <table class="table table-bordered table-striped" id="transactions_table">
+                                <tr>
+                                    <th>Highlights</th>
+                                    <th>Hire</th>
+                                    <th>Return</th>
+                                    <th>Duration</th>
+                                    <th>Price</th>
+                                </tr>
+                            </table>
+                            <br>
+                            <a href="/history">
+                                <i class="icon fas fa-align-justify" style="padding-right: 10px; font-size: 15px" ></i>
+                                <span style="font-size: 15px"> check full history of rentals </span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col l6 s12 m8 nopadding">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <span class="card-title">5 last finished transactions</span>
-                        <table class="table table-bordered table-striped" id="transactions_table">
-                            <tr>
-                                <th>Highlights</th>
-                                <th>Hire</th>
-                                <th>Return</th>
-                                <th>Duration</th>
-                                <th>Price</th>
-                            </tr>
-                        </table>
-                        <br>
-                        <a href="/history">
-                            <i class="fas fa-align-justify" style="padding-right: 10px; font-size: 15px" ></i>
-                            <span style="font-size: 15px"> check full history of rentals </span>
-                        </a>
-                    </div>
 
                     <script>
                         $(document).ready(function () {
-
                             fetch("http://127.0.0.1:8080/api/v1/transactions/")
                                 .then((response) => {
                                     return response.json()
@@ -129,12 +148,12 @@
                                      balance = myJson['balance'];
                                     $("#balance").text(myJson['balance']+"zł");
                                     $("#qr-image").attr("src", `http://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${myJson['qr_identifier']}`);
+                                    $("#phone_number").text(myJson['phone_number']);
                                  })
                          })
                     </script>
                 </div>
             </div>
-        </div>
-    </div>
+
 
 {% endblock %}

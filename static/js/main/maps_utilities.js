@@ -41,21 +41,20 @@
     var bounds;
 
     function plotMarkers(m) {
-        console.log(m)
         markers = [];
         bounds = new google.maps.LatLngBounds();
 
         m.forEach(function(marker){
+            var content;
+
             var position = new google.maps.LatLng(marker.latitude, marker.longitude);
+            var mark = new google.maps.Marker({
+                  position: position,
+                  map: map,
+                });
 
-            markers.push(
-                new google.maps.Marker({
-                    position: position,
-                    map: map,
-                    animation: google.maps.Animation.DROP
 
-                })
-            );
+            markers.push(mark);
 
             bounds.extend(position)
         });

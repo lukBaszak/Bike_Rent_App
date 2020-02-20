@@ -22,7 +22,6 @@ class Station(models.Model):
     longitude = models.DecimalField(
         max_digits=9, decimal_places=6, null=True, blank=True)
     max_bikes_quantity = models.IntegerField(default=0)
-
     objects = StationManager()
 
     class Meta:
@@ -30,6 +29,10 @@ class Station(models.Model):
 
     def natural_key(self):
         return self.longitude, self.latitude
+
+    def __str__(self):
+        return str(self.id) + self.name
+
 
 
 class Bike(models.Model):

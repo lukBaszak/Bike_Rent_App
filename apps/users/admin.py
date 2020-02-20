@@ -8,8 +8,6 @@ from django.contrib.auth.models import User
 from apps.rents.models import Station
 from apps.users.models import Profile
 
-
-
 admin.site.register(Profile)
 
 

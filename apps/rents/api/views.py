@@ -7,13 +7,24 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.parsers import JSONParser
 
 from apps.rents.api.serializers import RentTransactionSerializer, BikeSerializer, StationSerializer
-from apps.rents.models import Station, HireTransaction
+from apps.rents.models import Station, HireTransaction, Bike
 
 
 class StationViewSet(generics.ListAPIView):
     queryset = Station.objects.all()
     model = Station
     serializer_class = StationSerializer
+
+#TODO add additional station detail; photos
+@api_view(['GET'])
+def station_availability(request, pk):
+    try:
+        station = Station.objects.get(id=pk)
+    except Station.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    return JsonResponse({"availability_quantity": len(Bike.objects.filter(actual_station=station))})
+
 
 
 class RentTransactionList(generics.ListAPIView):

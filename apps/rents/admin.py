@@ -15,7 +15,7 @@ class BikeAdmin(admin.ModelAdmin):
 
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'max_bikes_quantity','latitude', 'longitude', )
+    list_display = ('id', 'name', 'max_bikes_quantity','latitude', 'longitude', )
 
 
 

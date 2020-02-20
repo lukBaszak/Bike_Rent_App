@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.rents.api import views
 from apps.rents.api.views import StationViewSet
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +27,6 @@ urlpatterns = [
 
     path('api/v1/transactions/', include('apps.rents.api.urls')),
     path('api/v1/users/', include('apps.users.api.urls')),
+    path('station_availability/<int:pk>', views.station_availability)
 
 ]

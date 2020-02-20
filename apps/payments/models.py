@@ -13,5 +13,5 @@ class PaymentTransaction(models.Model):
 @receiver(post_save, sender=PaymentTransaction)
 def payment_transaction_created(sender, instance, created, **kwargs):
     profile = Profile.objects.get(user=instance.hire_transaction.user)
-    profile.balance = profile.balance- instance.price
+    profile.balance = profile.balance-instance.price
     profile.save()
